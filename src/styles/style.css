@@ -6,17 +6,18 @@ body,
     left: 0;
     width: 100%;
     height: 100%;
-    background-image: url('../assets/spaceBackground.jpg');
+    background-color: #3c404e;
+    /* background-image: url('../assets/spaceBackground.jpg');
     background-size: cover;
     background-position: center;
-    background-repeat: no-repeat;
+    background-repeat: no-repeat; */
 }
 
 /* * {
     cursor: none;
 } */
 
-canvas {
+* {
     touch-action: none;
 }
 

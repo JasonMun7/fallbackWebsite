@@ -10,24 +10,26 @@ import * as THREE from 'three'
 // Import assets
 import whoosh from '../../assets/audio/whoosh.mp3'
 import typeAudio from '../../assets/audio/type.mp3'
+import mouseClick from '../../assets/audio/mouseClick.mp3'
+import scroll from '../../assets/audio/scroll.mp3'
 
 // Import Styles
-import "../../styles/iframeWeb.css"
+import "../../../public/iframeWeb.css"
 
 export default function Experience() {
     // State and Refs
     const laptopRef = useRef();
     const { camera } = useThree()
     const [zoomIn, setZoomIn] = useState(false);
-    const targetPosition = new THREE.Vector3(0, 0, 2);
-    const originalPosition = new THREE.Vector3(-3, 1.5, 4);
-
-
+    const targetCameraPosition = new THREE.Vector3(0, 0, 2);
+    const originalCameraPosition = new THREE.Vector3(-3, 1.5, 4);
 
 
     // Audio initialization
     const whooshSound = new Audio(whoosh);
     const typingAudio = new Audio(typeAudio);
+    const mouseClickAudio = new Audio(mouseClick)
+    const scrollAudio = new Audio(scroll)
 
 
     // Debug Panel
@@ -48,32 +50,76 @@ export default function Experience() {
     // Audio handling functions
     const playTypingSoundAndAnimate = () => { typingAudio.play(); }
     const playWhooshSound = () => { whooshSound.play(); };
+    const playMouseClickSound = () => { mouseClickAudio.play(); }
+    const playScrollSound = () => { scrollAudio.play(); }
 
     // Handling Functions
+    // const zoomInHandler = () => {
+    //     if (!zoomIn) {
+    //         // playWhooshSound();
+    //         gsap.to(camera.position, {
+    //             duration: 0.75,
+    //             x: targetPosition.x,
+    //             y: targetPosition.y,
+    //             z: targetPosition.z,
+    //             ease: "power2.inOut",
+    //             onUpdate: () => camera.lookAt(0, 0.2, 0)
+    //         });
+    //     } else {
+    //         // playWhooshSound()
+    //         gsap.to(camera.position, {
+    //             duration: 0.75,
+    //             x: originalPosition.x,
+    //             y: originalPosition.y,
+    //             z: originalPosition.z,
+    //             ease: "power2.inOut",
+    //             onUpdate: () => camera.lookAt(0, 0, 0)
+    //         });
+    //     }
+    //     setZoomIn(!zoomIn);
+    // }
+
     const zoomInHandler = () => {
-        if (!zoomIn) {
-            playWhooshSound();
-            gsap.to(camera.position, {
-                duration: 0.75,
-                x: targetPosition.x,
-                y: targetPosition.y,
-                z: targetPosition.z,
-                ease: "power2.inOut",
-                onUpdate: () => camera.lookAt(0, 0.2, 0)
-            });
-        } else {
-            playWhooshSound()
-            gsap.to(camera.position, {
-                duration: 0.75,
-                x: originalPosition.x,
-                y: originalPosition.y,
-                z: originalPosition.z,
-                ease: "power2.inOut",
-                onUpdate: () => camera.lookAt(0, 0, 0)
-            });
-        }
-        setZoomIn(!zoomIn);
-    }
+        gsap.to(camera.position, {
+            duration: 0.75,
+            x: targetCameraPosition.x,
+            y: targetCameraPosition.y,
+            z: targetCameraPosition.z,
+            ease: "power2.inOut",
+            onUpdate: () => camera.lookAt(0, 0.15, 0)
+        });
+        setZoomIn(true);
+    };
+
+    const zoomOutHandler = () => {
+        gsap.to(camera.position, {
+            duration: 0.75,
+            x: originalCameraPosition.x,
+            y: originalCameraPosition.y,
+            z: originalCameraPosition.z,
+            ease: "power2.inOut",
+            onUpdate: () => camera.lookAt(0, 0.15, 0)
+        });
+        setZoomIn(false);
+    };
+
+    useEffect(() => {
+        const handleMessage = (event) => {
+            if (event.data === 'iframeClicked') {
+                playMouseClickSound()
+            } else if (event.data === 'iframeScrolled') {
+                playScrollSound()
+            }
+        };
+
+        window.addEventListener('message', handleMessage);
+
+        return () => {
+            window.removeEventListener('message', handleMessage);
+        };
+    }, []);
+
+
 
 
     return (
@@ -81,7 +127,7 @@ export default function Experience() {
             {/* Environment Setup */}
             <Environment preset="city" />
             {perfVisible && <Perf position="top-left" />}
-            <color args={['#3c404e']} attach="background" />
+            {/* <color args={['#3c404e']} attach="background" /> */}
 
             {/* 3dHand Cursor */}
             {/* <primitive
@@ -108,15 +154,14 @@ export default function Experience() {
                         width={2.5}
                         height={1.65}
                         intensity={65}
-                        color={screenColor}
+                        color={'#00d9ff'}
                         rotation={[-0.1, Math.PI, 0]}
                         position={[0, 0.55, -1.15]}
                     />
 
                     {/* Laptop Model */}
                     <primitive
-                        // onDoubleClick={playTypingSoundAndAnimate}
-                        onClick={zoomInHandler}
+                        onClick={playTypingSoundAndAnimate}
                         ref={laptopRef}
                         object={laptop.scene}
                         position-y={-1.2}
@@ -129,7 +174,12 @@ export default function Experience() {
                             position={[0, 1.56, -1.4]}
                             rotation-x={-0.256}
                         >
-                            <iframe id="iframeContent" src="../../assets/iframeWeb.html" />
+                            <iframe
+                                id="iframeContent"
+                                src="/iframeWeb.html"
+                                onPointerOver={zoomInHandler}
+                                onPointerOut={zoomOutHandler}
+                            />
                         </Html>
                     </primitive>
 
