@@ -1,7 +1,7 @@
 // Import dependencies
 import { useControls } from 'leva'
 import { Perf } from 'r3f-perf'
-import { Text, Html, Environment, useGLTF, Float, PresentationControls, ContactShadows, PivotControls } from '@react-three/drei'
+import { Text, Html, Environment, useGLTF, Float, PresentationControls, ContactShadows, Sparkles } from '@react-three/drei'
 import { useFrame, useThree } from '@react-three/fiber'
 import { useState, useEffect, useRef } from 'react'
 import { gsap } from "gsap";
@@ -33,12 +33,12 @@ export default function Experience() {
 
 
     // Debug Panel
-    const { perfVisible } = useControls('perfcontrols', { perfVisible: true })
-    const { laptopPosition, laptopRotation, screenColor } = useControls('laptop', {
-        position: { value: { x: -2, y: 2 }, step: 0.1 },
-        rotation: { value: { x: 0, y: 0 }, step: 0.1 },
-        screenColor: { value: '#00d9ff' }
-    })
+    // const { perfVisible } = useControls('perfcontrols', { perfVisible: true })
+    // const { laptopPosition, laptopRotation, screenColor } = useControls('laptop', {
+    //     position: { value: { x: -2, y: 2 }, step: 0.1 },
+    //     rotation: { value: { x: 0, y: 0 }, step: 0.1 },
+    //     screenColor: { value: '#00d9ff' }
+    // })
 
 
 
@@ -54,31 +54,6 @@ export default function Experience() {
     const playScrollSound = () => { scrollAudio.play(); }
 
     // Handling Functions
-    // const zoomInHandler = () => {
-    //     if (!zoomIn) {
-    //         // playWhooshSound();
-    //         gsap.to(camera.position, {
-    //             duration: 0.75,
-    //             x: targetPosition.x,
-    //             y: targetPosition.y,
-    //             z: targetPosition.z,
-    //             ease: "power2.inOut",
-    //             onUpdate: () => camera.lookAt(0, 0.2, 0)
-    //         });
-    //     } else {
-    //         // playWhooshSound()
-    //         gsap.to(camera.position, {
-    //             duration: 0.75,
-    //             x: originalPosition.x,
-    //             y: originalPosition.y,
-    //             z: originalPosition.z,
-    //             ease: "power2.inOut",
-    //             onUpdate: () => camera.lookAt(0, 0, 0)
-    //         });
-    //     }
-    //     setZoomIn(!zoomIn);
-    // }
-
     const zoomInHandler = () => {
         gsap.to(camera.position, {
             duration: 0.75,
@@ -119,14 +94,12 @@ export default function Experience() {
         };
     }, []);
 
-
-
-
     return (
         <>
             {/* Environment Setup */}
             <Environment preset="city" />
-            {perfVisible && <Perf position="top-left" />}
+            {/* <Sparkles count={100} size={5} scale={5} /> */}
+            {/* {perfVisible && <Perf position="top-left" />} */}
             {/* <color args={['#3c404e']} attach="background" /> */}
 
             {/* 3dHand Cursor */}
@@ -162,6 +135,7 @@ export default function Experience() {
                     {/* Laptop Model */}
                     <primitive
                         onClick={playTypingSoundAndAnimate}
+                        // onPointerEnter={playWhooshSound}
                         ref={laptopRef}
                         object={laptop.scene}
                         position-y={-1.2}

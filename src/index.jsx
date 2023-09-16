@@ -16,6 +16,7 @@ const root = ReactDOM.createRoot(document.querySelector('#root'))
 root.render(
     <>
         {/* <Cursor /> */}
+        {/* <LoadingScreen /> */}
         <Suspense fallback={<LoadingScreen />}>
             <Canvas
                 camera={{
@@ -28,7 +29,6 @@ root.render(
                 <Experience />
                 <Environment />
             </Canvas>
-            <LoadingScreen />
         </Suspense>
     </>
 )

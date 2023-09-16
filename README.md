@@ -31,4 +31,4 @@ Welcome to my Fallback Website. This temporary platform serves as a placeholder 
 
 ### Final Remarks 📝
 
-Thank you for visiting Jason Mun's fallback website. The comprehensive personal website is under development and will be live soon. Stay tuned and thank you for your patience! 😊🌈
+Thank you for visiting my fallback website! The comprehensive personal website is under development and will be live soon. Stay tuned and thank you for your patience! 😊🌈
