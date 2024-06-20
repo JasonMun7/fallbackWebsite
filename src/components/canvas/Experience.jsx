@@ -31,20 +31,8 @@ export default function Experience() {
     const mouseClickAudio = new Audio(mouseClick)
     const scrollAudio = new Audio(scroll)
 
-
-    // Debug Panel
-    // const { perfVisible } = useControls('perfcontrols', { perfVisible: true })
-    // const { laptopPosition, laptopRotation, screenColor } = useControls('laptop', {
-    //     position: { value: { x: -2, y: 2 }, step: 0.1 },
-    //     rotation: { value: { x: 0, y: 0 }, step: 0.1 },
-    //     screenColor: { value: '#00d9ff' }
-    // })
-
-
-
     // Load 3D model
     const laptop = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/macbook/model.gltf');
-    const hand = useGLTF('https://vazxmixjsiawhamofees.supabase.co/storage/v1/object/public/models/right-hand-white-webxr-tracking-ready/model.gltf')
 
 
     // Audio handling functions
@@ -52,6 +40,7 @@ export default function Experience() {
     const playWhooshSound = () => { whooshSound.play(); };
     const playMouseClickSound = () => { mouseClickAudio.play(); }
     const playScrollSound = () => { scrollAudio.play(); }
+
 
     // Handling Functions
     const zoomInHandler = () => {
@@ -78,6 +67,8 @@ export default function Experience() {
         setZoomIn(false);
     };
 
+
+    // Use Effect for the Audio
     useEffect(() => {
         const handleMessage = (event) => {
             if (event.data === 'iframeClicked') {
@@ -96,20 +87,10 @@ export default function Experience() {
 
     return (
         <>
+
             {/* Environment Setup */}
             <Environment preset="city" />
-            {/* <Sparkles count={100} size={5} scale={5} /> */}
-            {/* {perfVisible && <Perf position="top-left" />} */}
-            {/* <color args={['#3c404e']} attach="background" /> */}
-
-            {/* 3dHand Cursor */}
-            {/* <primitive
-                object={hand.scene}
-                scale={5}
-                rotation-x={Math.PI / 2}
-                position={[0, 1, 2]}
-            >
-            </primitive> */}
+            {/* <axesHelper args={[5]} /> */}
 
 
             {/* Main Controls over Laptop and Text  */}
@@ -170,6 +151,7 @@ export default function Experience() {
                         </Text>
                     )}
                 </Float>
+
 
             </PresentationControls>
 
