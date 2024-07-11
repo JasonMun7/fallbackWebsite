@@ -1,0 +1,2 @@
+import{g as a}from"./@chevrotain-39b5b250.js";import{i as f}from"./is-extendable-14f90f2f.js";import{m as g}from"./mixin-deep-3206952a.js";import{g as o}from"./get-value-efae0488.js";import{s as p}from"./set-value-60acebc4.js";var m=f,n=g,u=o,s=p,c=function(e,t,r){if(!m(e))throw new TypeError("expected an object");if(typeof t!="string"||r==null)return n.apply(null,arguments);if(typeof r=="string")return s(e,t,r),e;var i=u(e,t);return m(r)&&m(i)&&(r=n({},i,r)),s(e,t,r),e};const w=a(c);export{w as m};
+//# sourceMappingURL=merge-value-9783d3b1.js.map
